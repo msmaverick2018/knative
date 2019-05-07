@@ -17,11 +17,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading;
 
 namespace helloworld_csharp
 {
     public class Startup
     {
+        private int requestCount = 0;
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -38,9 +40,11 @@ namespace helloworld_csharp
 
             app.Run(async (context) =>
             {
-                var target = Environment.GetEnvironmentVariable("TARGET") ?? "World";
-                await Task.Delay(50);
-                await context.Response.WriteAsync($"Hello {target}\n");
+                Interlocked.Increment(ref requestCount);
+                var target = Environment.GetEnvironmentVariable("APPLICATION-VERSION") ?? "World";
+                var responseMessage = "{ \"request\": " + requestCount + ", \"application-version\": \"" + target + "\"}";
+                await Task.Delay(100);
+                await context.Response.WriteAsync($"{responseMessage}\n");
             });
         }
     }

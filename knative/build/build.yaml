@@ -1,0 +1,18 @@
+apiVersion: build.knative.dev/v1alpha1
+kind: Build
+metadata:
+  name: build-aspnet-core-app
+spec:
+  serviceAccountName: build-bot 
+  source:
+    git:
+      url: "https://github.com/msmaverick2018/knative-repo.git"
+      revision: "master"
+    subPath: "knative-repo/aspnetcoreapp/"
+  steps:
+  - name: build-and-push
+    image: "gcr.io/kaniko-project/executor:v0.6.0"
+    args:
+    - "--dockerfile=Dockerfile"
+    # Replace meteatamel with your actual DockerHub
+    - "--destination=docker.io/mantusingh/knative-app:knativebuild"
