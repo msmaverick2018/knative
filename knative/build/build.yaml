@@ -8,7 +8,7 @@ spec:
     git:
       url: "https://github.com/msmaverick2018/knative-repo.git"
       revision: "master"
-    subPath: "knative-repo/aspnetcoreapp/"
+    subPath: "AspnetCoreApp/"
   steps:
   - name: build-and-push
     image: "gcr.io/kaniko-project/executor:v0.6.0"

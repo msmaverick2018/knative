@@ -12,7 +12,7 @@ spec:
         spec:
           container:
             # Replace meteatamel with your actual DockerHub
-            image: docker.io/mantusingh/knative-app
+            image: docker.io/mantusingh/knative-app:knativebuild
             env:
               - name: APPLICATION-VERSION
                 value: "C# App v1"

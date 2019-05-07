@@ -43,7 +43,7 @@ namespace helloworld_csharp
                 Interlocked.Increment(ref requestCount);
                 var target = Environment.GetEnvironmentVariable("APPLICATION-VERSION") ?? "World";
                 var responseMessage = "{ \"request\": " + requestCount + ", \"application-version\": \"" + target + "\"}";
-                await Task.Delay(100);
+                await Task.Delay(200);
                 await context.Response.WriteAsync($"{responseMessage}\n");
             });
         }
