@@ -13,4 +13,4 @@ spec:
             image: docker.io/mantusingh/knative-app:knativebuild
             env:
               - name: APPLICATION-VERSION
-                value: "C# App v1"
+                value: "C# App v2"

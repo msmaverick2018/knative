@@ -1,0 +1,21 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: aspnet-core-app
+  namespace: default
+spec:
+  release:
+    # Ordered list of 1 or 2 revisions. 
+    # First revision is traffic target "current"
+    # Second revision is traffic target "candidate"
+    revisions: ["aspnet-core-app-292rn", "aspnet-core-app-wvqbq"]
+    rolloutPercent: 10 # Percent [0-99] of traffic to route to "candidate" revision  
+    configuration:
+      revisionTemplate:        
+        spec:
+          container:
+            # Replace meteatamel with your actual DockerHub
+            image: docker.io/mantusingh/knative-app:knativebuild
+            env:
+              - name: APPLICATION-VERSION
+                value: "C# App v3"
