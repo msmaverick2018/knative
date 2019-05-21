@@ -95,6 +95,7 @@ tests/functional/Robot/log.html
 tests/functional/Robot/output.xml
 tests/functional/Robot/report.html
 .vs/
+.vscode/
 dist/
 example/
 tests/functional/Robot/Env/

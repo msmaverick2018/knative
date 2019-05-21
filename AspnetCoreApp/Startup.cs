@@ -18,16 +18,33 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc;
 
-namespace helloworld_csharp
+namespace aspnet.core
 {
     public class Startup
     {
         private int requestCount = 0;
+        public static IConfiguration Configuration { get; set; }
+        public IHostingEnvironment HostingEnvironment { get; }
+
+        private string applicationGlobalRoutePrefix { get; set; }
+
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        {
+            Configuration = configuration;
+            HostingEnvironment = env;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
+            services.Configure<MyAppOptions>(Configuration);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,14 +55,15 @@ namespace helloworld_csharp
                 app.UseDeveloperExceptionPage();
             }
 
-            app.Run(async (context) =>
-            {
-                Interlocked.Increment(ref requestCount);
-                var target = Environment.GetEnvironmentVariable("APPLICATION-VERSION") ?? "World";
-                var responseMessage = "{ \"request\": " + requestCount + ", \"application-version\": \"" + target + "\"}";
-                await Task.Delay(200);
-                await context.Response.WriteAsync($"{responseMessage}\n");
-            });
+            app.UseMvc();
+            //app.Run(async (context) =>
+            //{
+            //    Interlocked.Increment(ref requestCount);
+            //    var target = Environment.GetEnvironmentVariable("APPLICATION-VERSION") ?? "World";
+            //    var responseMessage = "{ \"request\": " + requestCount + ", \"application-version\": \"" + target + "\"}";
+            //    await Task.Delay(200);
+            //    await context.Response.WriteAsync($"{responseMessage}\n");
+            //});
         }
     }
 }

@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 using System;
+using KubeClient;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using KubeClient.Extensions.Configuration;
 
-namespace helloworld_csharp
+namespace aspnet.core
 {
     public class Program
     {
@@ -26,6 +28,14 @@ namespace helloworld_csharp
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                    .ConfigureAppConfiguration(
+                        (configuration) => configuration.AddKubeConfigMap(
+                            clientOptions: KubeClientOptions.FromPodServiceAccount(),
+                            configMapName: "demo-config",
+                            kubeNamespace: "default",
+                            reloadOnChange: true
+                        )
+                    )
                 .UseStartup<Startup>();
     }
 }

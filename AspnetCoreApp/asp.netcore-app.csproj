@@ -3,10 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-    <RootNamespace>helloworld_csharp</RootNamespace>
+    <RootNamespace>aspnet.core</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="KubeClient" Version="2.2.11" />
+    <PackageReference Include="KubeClient.Extensions.Configuration" Version="2.2.11" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
